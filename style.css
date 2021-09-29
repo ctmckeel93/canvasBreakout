@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+
 body {
     background-color: black;
     color: red;
@@ -6,13 +8,35 @@ body {
     align-items: center;
 }
 
+body#start {
+    background-image: url(./images/start.jpeg);
+}
+
+.container {
+    margin-top: 10%;
+    width: 400px;
+    height: 500px;
+    background-color: rgba(128, 128, 128, 0.474);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 #screen {
+    font-family: 'Oswald', sans-serif;
     margin-top: 5%;
     display: flex;
     font-size:30pt;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#choices {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }
 
 button {
@@ -24,6 +48,12 @@ button {
     box-shadow: 3px 3px grey, -.2em 0 .4em red
 }
 
-canvas {
-    background-image: url('./images/background.png');
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#selected {
+    text-shadow: 2px 2px purple;
+    color: white;
 }

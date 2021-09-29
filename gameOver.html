@@ -11,8 +11,12 @@
     <div id="screen">
         <h1>Game Over</h1>
         <h2>Score: <span id="score"></span></h2>
-        <a href="./index.html"><button>Restart</button></a>
-        <script>
+        <div id="choices">
+            <a href="./index.html"><button>Restart</button></a>
+            <h2>Or</h2>
+            <a href="./start.html"><button>Main Menu</button></a>
+        </div>
+            <script>
             document.getElementById("score").innerHTML = sessionStorage.getItem("Score");
         </script>
     </div>
