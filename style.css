@@ -7,7 +7,7 @@ body {
 }
 
 #screen {
-    margin-top: 20%;
+    margin-top: 5%;
     display: flex;
     font-size:30pt;
     flex-direction: column;

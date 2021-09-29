@@ -10,7 +10,11 @@
 <body>
     <div id="screen">
         <h1>Game Over</h1>
+        <h2>Score: <span id="score"></span></h2>
         <a href="./index.html"><button>Restart</button></a>
+        <script>
+            document.getElementById("score").innerHTML = sessionStorage.getItem("Score");
+        </script>
     </div>
 </body>
 </html>

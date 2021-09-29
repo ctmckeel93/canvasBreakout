@@ -4,26 +4,37 @@
     <meta charset="utf-8" />
     <title>Gamedev Canvas Workshop</title>
     <style>
-    	* { padding: 0; margin: 0; }
+    	* { padding: 0; margin: 100px; }
     	canvas { background: url('./images/background.png'); display: block; margin: 0 auto; }
+        body {background-color: gray;}
     </style>
 </head>
 <body>
 
-<canvas id="myCanvas" width="480" height="320"></canvas>
+<canvas id="myCanvas" width="555" height="400"></canvas>
 
 <script>
+    sessionStorage.clear();
     // Making Canvas and deciding dimensions of the ball
 	var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
-    var score = 0;
+    
+    if (!sessionStorage.getItem("Score")) {
+        var score = 0;
+        sessionStorage.setItem("Score", score)
+    }
+    else { 
+        var score = parseInt(sessionStorage.getItem("Score"));
+    }
     var pointInterval = 5
     var lives = 3;
+    var initialSpeed = 3;
+    var level = 1;
 
     var x = canvas.width/2
     var y = canvas.height - 30;
-    var dx = 3;
-    var dy = -3;
+    var dx = initialSpeed;
+    var dy = initialSpeed * -1;
     var ballRadius = 8;
     var speedMultiplier = 1.2;
     var maxSpeed = 7;
@@ -33,7 +44,7 @@
     var paddleHeight = 10;
     var paddleWidth = 100;
     var paddleX = (canvas.width-paddleWidth) / 2;
-    var paddleSpeed = 6;
+    var paddleSpeed = 10;
 
     // check for movement of paddle
     var rightPressed = false; 
@@ -41,12 +52,13 @@
 
     // create the bricks
     var brickRowCount= 3;
-    var brickColumnCount = 5;
+    var brickColumnCount = 6;
     var brickWidth = 75;
     var brickHeight = 20;
     var brickPadding = 10;
     var brickOffsetTop = 30;
     var brickOffsetLeft = 30;
+    var brickColor = "#0095DD"
 
     var bricks = [];
     for (var c = 0; c < brickColumnCount; c++) {
@@ -55,8 +67,6 @@
             bricks[c][r] = {x:0, y: 0, status: 1};
         }
     }
-    bricks[0][2].status = 0;
-    bricks[4][2].status = 0;
 
     function drawBricks() {
         for (var c = 0; c < brickColumnCount; c++) {
@@ -69,7 +79,7 @@
                     bricks[c][r].y = brickY;
                     ctx.beginPath();
                     ctx.rect(brickX,brickY, brickWidth, brickHeight);
-                    ctx.fillStyle = "#0095DD"
+                    ctx.fillStyle = brickColor
                     ctx.fill();
                     ctx.closePath();
                 }
@@ -108,9 +118,8 @@
                         dy *= -1;
                         b.status = 0;
                         score+= pointInterval;
-                        if (score == (brickRowCount * brickColumnCount - 2) * pointInterval) {
-                            alert(`YOU WIN! Congratulations! \n Score: ${score} `);
-                            document.location.reload();
+                        if (score >= (brickRowCount * brickColumnCount) * pointInterval * level) {
+                            levelUp();
                         }
                         switch (ballColor) {
                             case "black":
@@ -149,7 +158,7 @@
 
     function drawScore() {
         ctx.font = "16px Arial";
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "green";
         ctx.fillText("Score: " + score, 8, 20);
     }
 
@@ -171,8 +180,8 @@
         }
         else if (y + dy > canvas.height-ballRadius) {
             if (x > paddleX && x < paddleX + paddleWidth) {
-                dy*= speedMultiplier;
-                dx*= speedMultiplier;
+                // dy*= speedMultiplier;
+                // dx*= speedMultiplier;
                 dy *= -1;
                 if (rightPressed && dx < 0) {
                     dx *= -1;
@@ -186,13 +195,13 @@
                 lives--
                 if (lives == 0) {
                     // alert("GAME OVER");
+                    sessionStorage.setItem("Score", score);
                     location.replace('gameOver.html');
                 }
                 else { 
                     x = canvas.width/2;
-                    y = canvas.height - 30;
-                    dx = 3;
-                    dy = -3
+                    y = canvas.height - 50;
+                    dy*=-1
                     paddleX = (canvas.width-paddleWidth)/2
                 }
 
@@ -246,6 +255,46 @@
         if (relativeX > 0 && relativeX < canvas.width) {
             paddleX = relativeX - paddleWidth/2
         }
+    }
+
+    function levelUp() {
+        level++
+        dy *= speedMultiplier
+        dx*= speedMultiplier
+        for (var c= 0; c < brickColumnCount; c++) {
+            for (var r=0; r < brickRowCount; r++) {
+                bricks[c][r].status = "1";
+            }
+        }
+        switch (brickColor) {
+                            case "#0095DD":
+                                brickColor = "red"
+                                break
+                            case "red":
+                                brickColor = "orange"
+                                break;
+                            case "orange":
+                                brickColor = "yellow"
+                                break;
+                            case "yellow":
+                                brickColor = "green"
+                                break;
+                            case "green":
+                                brickColor = "blue";
+                                break;
+                            case "blue":
+                                brickColor = "indigo";
+                                break;
+                            case "indigo":
+                                brickColor = "violet";
+                                break
+                            case "violet": 
+                                brickColor = "red";
+                                break
+                            default: 
+                                brickColor = "#0095DD";
+                                break
+                        }
     }
 
     draw()
