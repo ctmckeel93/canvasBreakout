@@ -12,10 +12,10 @@
 <body>
     <!-- <iframe src='./sounds/breakoutBGM.mp3' allow="autoplay" style="display:none" id="iframeAudio">
     </iframe> -->
-    <audio loop id="bgm">
-        <source src="./sounds/breakoutBGM.mp3">
+    <canvas id="myCanvas" width="555" height="400"></canvas>
+    <audio  loop id="bgm">
+        <source volume="0" src="./sounds/breakoutBGM.mp3">
     </audio>
-<canvas id="myCanvas" width="555" height="400"></canvas>
 
 <script>
     // document.getElementById("bgm").muted = false;
@@ -234,20 +234,34 @@
         }
         requestAnimationFrame(draw);
     }
+    var myAudio = document.getElementById("bgm");
+    console.log(myAudio);
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
     document.addEventListener("mousemove", mouseMoveHandler, false);
+    document.addEventListener("canplay" , function () {
+        myAudio.setAttribute("vol", 0);
+
+    }, false);
 
     function keyDownHandler(e) {
-        var audio = document.getElementById("bgm");
-        audio.play();
-        audio.volume = 0.2
+        myAudio.play();
+        // while (myAudio.volume > 0.2) {
+        //     myAudio.volume -= 0.1;
+        // }
+        myAudio.volume = 0.1;
         if (e.key == "Right" || e.key == "ArrowRight") {
             rightPressed = true;
         }
         else if (e.key == "Left" || e.key == "ArrowLeft") {
             leftPressed = true;
         }
+
+        if (e.key == "p") {
+            myAudio.pause();
+        }
+        
+         
     }
     function keyUpHandler(e) {
         if (e.key == "Right" || e.key == "ArrowRight") {
@@ -259,9 +273,6 @@
     }
 
     function mouseMoveHandler(e) {
-        var audio = document.getElementById("bgm");
-        audio.play();
-        audio.volume = 0.2
 
         var relativeX = e.clientX - canvas.offsetLeft;
         if (relativeX > 0 && relativeX < canvas.width) {

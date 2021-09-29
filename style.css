@@ -57,3 +57,7 @@ a {
     text-shadow: 2px 2px purple;
     color: white;
 }
+
+audio, source {
+    display: hidden;
+}
