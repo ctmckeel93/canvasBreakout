@@ -10,10 +10,15 @@
     </style>
 </head>
 <body>
-
+    <!-- <iframe src='./sounds/breakoutBGM.mp3' allow="autoplay" style="display:none" id="iframeAudio">
+    </iframe> -->
+    <audio loop id="bgm">
+        <source src="./sounds/breakoutBGM.mp3">
+    </audio>
 <canvas id="myCanvas" width="555" height="400"></canvas>
 
 <script>
+    // document.getElementById("bgm").muted = false;
     sessionStorage.clear();
     // Making Canvas and deciding dimensions of the ball
 	var canvas = document.getElementById("myCanvas");
@@ -234,6 +239,9 @@
     document.addEventListener("mousemove", mouseMoveHandler, false);
 
     function keyDownHandler(e) {
+        var audio = document.getElementById("bgm");
+        audio.play();
+        audio.volume = 0.2
         if (e.key == "Right" || e.key == "ArrowRight") {
             rightPressed = true;
         }
@@ -251,6 +259,10 @@
     }
 
     function mouseMoveHandler(e) {
+        var audio = document.getElementById("bgm");
+        audio.play();
+        audio.volume = 0.2
+
         var relativeX = e.clientX - canvas.offsetLeft;
         if (relativeX > 0 && relativeX < canvas.width) {
             paddleX = relativeX - paddleWidth/2
