@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="scoreForm" action="#">
+        <input onChange="handlePlayer()" type="text" name="name">
+    </form>
+
+    <script>
+        var player = ""
+        var score = sessionStorage.getItem("Score");
+        var scores = []
+        class Player {
+            constructor(name, score) {
+                this.name = name,
+                this.score = score
+            }
+        }
+        document.addEventListener("keydown", submitForm, false) 
+
+        function submitForm(e) {
+            e.preventDefault();
+            var user = new User(player, score )
+            localStorage.setItem("")
+
+        }
+
+        function handlePlayer(e) {
+            player = e.target.value;
+        }
+
+        
+    </script>
+</body>
+</html>

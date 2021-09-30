@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body id="start">
+    <div class="container">
+        <a href="/breakout"><h1 id="selected">Start</h1></a>
+        <a href="/instructions"><h1>Instructions</h1></a>
+        <a href="#"><h1>High Score</h1></a>
+
+    </div>
+    <script>
+        document.addEventListener("keydown", menuSelect, false);
+        
+        function menuSelect(e) {
+            var selected = document.getElementById("selected") 
+            var nextSibling = selected.parentNode.nextElementSibling;
+            var prevSibling = selected.parentNode.previousElementSibling;
+            console.log(e);
+            // console.log(selected)
+            // console.log(sibling)
+            if (e.key == "Down" || e.key == "ArrowDown") {
+                if (nextSibling){
+                    nextSibling.firstChild.setAttribute("id", "selected")
+                    selected.setAttribute("id", "");
+                }
+
+            }
+            else if (e.key == "Up" || e.key == "ArrowUp") {
+                console.log(prevSibling);
+                if (prevSibling){
+                    console.log(selected)
+                    prevSibling.firstChild.setAttribute("id", "selected")
+                    selected.setAttribute("id", "");
+                }
+            }
+
+            if (e.key == "Enter") {
+                location.replace(selected.parentNode.href);
+            }
+        }
+    </script>
+</body>
+</html>
