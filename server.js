@@ -19,6 +19,10 @@ router.get('/game-over', (req, res) => {
     res.sendFile(path.join(__dirname+'/public/gameOver.html'))
 })
 
+router.get("/winner", (req, res) => { 
+    res.sendFile(path.join(__dirname + "/public/playerScore.html"))
+})
+
 
 app.use('/', router);
 app.use(express.static(__dirname+'/public'));
