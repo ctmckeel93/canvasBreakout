@@ -22,6 +22,19 @@ body#start {
     align-items: center;
     flex-direction: column;
 }
+
+#playerScore {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+#playerScore input {
+    background-color: black;
+    color: lime;
+}
 #screen {
     font-family: 'Oswald', sans-serif;
     margin-top: 5%;

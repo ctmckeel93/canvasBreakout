@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ctmckeel93/canvasBreakout#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongoose": "^6.0.8",
     "nodemon": "^2.0.13",
     "pug": "^3.0.2"
   }

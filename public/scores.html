@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <h1>High Scores</h1>
+        <div id="scores"></div>
+    </div>
+</body>
+
+<script>
+    var scoreList = document.getElementById("scores");
+    fetch('http://localhost:8000/api/scores')
+        .then(res => res.json())
+        .then(data => scores = data.scores)
+        .then(() => console.log(scores))
+        .then(() => {
+            scores.map((score, idx) => {
+                var scoreShow = document.createElement('p');
+                scoreShow.innerHTML = `${score.name} - ${score.score}`;
+    
+                scoreList.appendChild(scoreShow);
+            })
+        })
+        .catch(err => console.log(err))
+
+        // if (scores !== null) {
+
+        //     scores.map((score, idx) => {
+        //         var scoreShow = document.createElement('p');
+        //         scoreShow.innerHTML = `${score.name} - ${score.score}`;
+    
+        //         scoreList.appendChild(scoreShow);
+        //     })
+        // }
+
+</script>
+</html>

@@ -4,37 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <title>Document</title>
 </head>
 <body>
-    <form id="scoreForm" action="#">
-        <input onChange="handlePlayer()" type="text" name="name">
-    </form>
+    <div id="playerScore">
+        <h1>Congratulations! You made the High Scores list!</h1>
+        <h2>Enter your name</h2>
+        <form id="scoreForm" action="/api/scores" method="post">
+            <input type="text" name="name">
+            <input id="score" type="hidden" name="score" value="">
+        </form>
+    </div>
 
     <script>
-        var player = ""
+        var scoreInput = document.getElementById("score");
         var score = sessionStorage.getItem("Score");
-        var scores = []
-        class Player {
-            constructor(name, score) {
-                this.name = name,
-                this.score = score
-            }
-        }
-        document.addEventListener("keydown", submitForm, false) 
-
-        function submitForm(e) {
-            e.preventDefault();
-            var user = new User(player, score )
-            localStorage.setItem("")
-
-        }
-
-        function handlePlayer(e) {
-            player = e.target.value;
-        }
+        console.log(score)
+        scoreInput.value = score;
 
         
+        // scoreInput.setAttribute("value", );
     </script>
 </body>
 </html>
