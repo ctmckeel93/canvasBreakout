@@ -103,3 +103,32 @@ audio, source {
     color: red;
     text-shadow: 2px 2px black;
 }
+
+#high-scores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    font-size: 20pt;
+    text-align: center;
+    text-align-last: left;
+}
+
+#scores {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 500px;
+    width: 90%;
+}
+
+.high-scores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 800px;
+    /* margin-top: 5%; */
+    width: 50%;
+}
