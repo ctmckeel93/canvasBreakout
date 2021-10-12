@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+    	* { padding: 0; margin: 100px; }
+    	canvas { background: url('./images/background.png'); display: block; margin: 0 auto; }
+        body {background-color: gray;}
+    </style>
+</head>
+<body>
+    <!-- <iframe src='./sounds/breakoutBGM.mp3' allow="autoplay" style="display:none" id="iframeAudio">
+    </iframe> -->
+    <canvas id="myCanvas" width="555" height="400"></canvas>
+    <audio  loop id="bgm">
+        <source volume="0" src="./sounds/breakoutBGM.mp3">
+    </audio>
+
+<script>
+    var scores;
+    fetch('http://localhost:8000/api/scores')
+        .then(res => res.json())
+        .then(data => scores = data.scores)
+    // document.requestFullScreen();
+    // document.getElementById("bgm").muted = false;
+    sessionStorage.clear();
+    // Making Canvas and deciding dimensions of the ball
+	var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    
+    if (!sessionStorage.getItem("Score")) {
+        var score = 0;
+        sessionStorage.setItem("Score", score)
+    }
+    else { 
+        var score = parseInt(sessionStorage.getItem("Score"));
+    }
+    var pointInterval = 5
+    var lives = 3;
+    var level = 1;
+    var initialSpeed = 3
+
+    var x = canvas.width/2
+    var y = canvas.height - 30;
+    var dx = initialSpeed;
+    var dy = initialSpeed * -1;
+    var ballRadius = 8;
+    var speedMultiplier = 1.2;
+    var maxSpeed = 7;
+    var ballColor = "black";
+
+    // Making the paddle
+    var paddleHeight = 10;
+    var paddleWidth = 100;
+    var paddleX = (canvas.width-paddleWidth) / 2;
+    var paddleSpeed = 10;
+
+    // check for movement of paddle
+    var rightPressed = false; 
+    var leftPressed = false; 
+
+    // create the bricks
+    var brickRowCount= 3;
+    var brickColumnCount = 6;
+    var brickWidth = 75;
+    var brickHeight = 20;
+    var brickPadding = 10;
+    var brickOffsetTop = 30;
+    var brickOffsetLeft = 30;
+    var brickColor = "#0095DD"
+
+    var bricks = [];
+    for (var c = 0; c < brickColumnCount; c++) {
+        bricks[c] = [];
+        for (var r=0; r < brickRowCount; r++) {
+            bricks[c][r] = {x:0, y: 0, status: 1};
+        }
+    }
+
+    function drawBricks() {
+        for (var c = 0; c < brickColumnCount; c++) {
+            for (var r=0; r < brickRowCount; r++) {
+                if (bricks[c][r].status == 1) {
+
+                    var brickX = c*(brickWidth+brickPadding) + brickOffsetLeft;
+                    var brickY = r*(brickHeight+brickPadding) + brickOffsetTop;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX,brickY, brickWidth, brickHeight);
+                    ctx.fillStyle = brickColor
+                    ctx.fill();
+                    ctx.closePath();
+                }
+                
+            }
+    }
+    }
+
+
+
+
+    
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x,y,ballRadius,0, Math.PI*2);
+        ctx.fillStyle = ballColor
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+    
+    function collision() {
+        for (var c=0; c < brickColumnCount; c++) {
+            for (var r=0; r < brickRowCount; r++) {
+                var b = bricks[c][r];
+                if (b.status == 1) {
+
+                    if (x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                        dy *= -1;
+                        b.status = 0;
+                        score+= pointInterval;
+                        if (score >= (brickRowCount * brickColumnCount) * pointInterval * level) {
+                            levelUp();
+                        }
+                        switch (ballColor) {
+                            case "black":
+                                ballColor = "red"
+                                break
+                            case "red":
+                                ballColor = "orange"
+                                break;
+                            case "orange":
+                                ballColor = "yellow"
+                                break;
+                            case "yellow":
+                                ballColor = "green"
+                                break;
+                            case "green":
+                                ballColor = "blue";
+                                break;
+                            case "blue":
+                                ballColor = "indigo";
+                                break;
+                            case "indigo":
+                                ballColor = "violet";
+                                break
+                            case "violet": 
+                                ballColor = "red";
+                                break
+                            default: 
+                                ballColor = "black";
+                                break
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "green";
+        ctx.fillText("Score: " + score, 8, 20);
+    }
+
+    function drawLives() {
+        font = "16px Arial";
+        ctx.fillStyle = "red"
+        ctx.fillText("Lives: " + lives, canvas.width-65, 20);
+    }
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBricks();
+        drawBall();
+        drawPaddle();
+        drawScore();
+        drawLives();
+        collision();
+        if(y + dy < ballRadius) {
+            dy *= -1;
+        }
+        else if (y + dy > canvas.height-ballRadius) {
+            if (x > paddleX && x < paddleX + paddleWidth) {
+                // dy*= speedMultiplier;
+                // dx*= speedMultiplier;
+                dy *= -1;
+                if (rightPressed && dx < 0) {
+                    dx *= -1;
+                }
+                else if (leftPressed && dx > 0) {
+                    dx *= -1;
+                }
+                
+            }
+            else {
+                lives--
+                if (lives == 0) {
+                    // alert("GAME OVER");
+                    sessionStorage.setItem("Score", score);
+                    if (scores.length < 10) {
+                        location.replace('./winner')
+                    }
+                    else if (scores && scores.some(anyScore => anyScore.score <= score) ) {
+                        location.replace('./winner')
+                    }
+                    else { 
+                        location.replace('./game-over');
+                    }
+                }
+                else { 
+                    x = canvas.width/2;
+                    y = canvas.height - 50;
+                    dy*=-1
+                    paddleX = (canvas.width-paddleWidth)/2
+                }
+
+            }
+        }
+        if (x + dx < ballRadius || x + dx > canvas.width- ballRadius) {
+            dx *= -1;
+        }
+
+        
+        x+= dx;
+        y+= dy;
+
+        if (rightPressed) {
+            paddleX += paddleSpeed;
+            if (paddleX + paddleWidth > canvas.width) {
+                paddleX = canvas.width - paddleWidth;
+            }
+        }
+        else if (leftPressed) {
+            paddleX -= paddleSpeed;
+            if (paddleX < 0) {
+                paddleX = 0;
+            }
+        }
+        requestAnimationFrame(draw);
+        // requestAnimationFrame(changeColor);
+    }
+    var myAudio = document.getElementById("bgm");
+    console.log(myAudio);
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("mousemove", mouseMoveHandler, false);
+    document.addEventListener("canplay" , function () {
+        myAudio.setAttribute("vol", 0);
+
+    }, false);
+
+    function keyDownHandler(e) {
+        myAudio.play();
+        // while (myAudio.volume > 0.2) {
+        //     myAudio.volume -= 0.1;
+        // }
+        myAudio.volume = 0.1;
+        if (e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = true;
+        }
+        else if (e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = true;
+        }
+
+        if (e.key == "p") {
+            myAudio.pause();
+        }
+        
+         
+    }
+    function keyUpHandler(e) {
+        if (e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = false;
+        }
+        else if (e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = false;
+        }
+    }
+
+    function mouseMoveHandler(e) {
+
+        var relativeX = e.clientX - canvas.offsetLeft;
+        if (relativeX > 0 && relativeX < canvas.width) {
+            paddleX = relativeX - paddleWidth/2
+        }
+    }
+
+    function changeColor() {
+        if (level%7 == 0) {
+                switch (brickColor) {
+                                case "#0095DD":
+                                    brickColor = "red"
+                                    break
+                                case "red":
+                                    brickColor = "orange"
+                                    break;
+                                case "orange":
+                                    brickColor = "yellow"
+                                    break;
+                                case "yellow":
+                                    brickColor = "green"
+                                    break;
+                                case "green":
+                                    brickColor = "blue";
+                                    break;
+                                case "blue":
+                                    brickColor = "indigo";
+                                    break;
+                                case "indigo":
+                                    brickColor = "violet";
+                                    break
+                                case "violet": 
+                                    brickColor = "red";
+                                    break
+                                default: 
+                                    brickColor = "#0095DD";
+                                    break
+                            }
+        }
+    }
+
+    function levelUp() {
+        level++
+        dy *= speedMultiplier
+        dx*= speedMultiplier
+        for (var c= 0; c < brickColumnCount; c++) {
+            for (var r=0; r < brickRowCount; r++) {
+                bricks[c][r].status = "1";
+            }
+        }
+        switch (brickColor) {
+                            case "#0095DD":
+                                brickColor = "red"
+                                break
+                            case "red":
+                                brickColor = "orange"
+                                break;
+                            case "orange":
+                                brickColor = "yellow"
+                                break;
+                            case "yellow":
+                                brickColor = "green"
+                                break;
+                            case "green":
+                                brickColor = "blue";
+                                break;
+                            case "blue":
+                                brickColor = "indigo";
+                                break;
+                            case "indigo":
+                                brickColor = "violet";
+                                break
+                            case "violet": 
+                                brickColor = "red";
+                                break
+                            default: 
+                                brickColor = "#0095DD";
+                                break
+                        }
+    }
+
+    draw()
+    setInterval(changeColor, 80)
+</script>
+
+</body>
+</html>
