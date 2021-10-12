@@ -12,10 +12,10 @@ app.use(express.urlencoded({extended:true}));
 
 // Views
 router.get('/', (req, res) => { 
-    res.sendFile(path.join(__dirname+'/public/start.html'))
+    res.sendFile(path.join(__dirname+'/public/index.html'))
 })
 router.get("/breakout", (req, res) => { 
-    res.sendFile(path.join(__dirname+"/public/index.html"));
+    res.sendFile(path.join(__dirname+"/public/game.html"));
 }) 
 
 router.get('/instructions', (req, res) => { 
