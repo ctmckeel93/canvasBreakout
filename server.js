@@ -11,26 +11,26 @@ app.use(express.urlencoded({extended:true}));
 
 // Views
 router.get('/', (req, res) => { 
-    res.sendFile(path.join(process.cwd()+'/public/index.html'))
+    res.sendFile(path.join(__dirname+'/public/index.html'))
 })
 router.get("/breakout", (req, res) => { 
-    res.sendFile(path.join(process.cwd()+"game.html"));
+    res.sendFile(path.join(__dirname+"/public/game.html"));
 }) 
 
 router.get('/instructions', (req, res) => { 
-    res.sendFile(path.join(process.cwd()+"instructions.html"))
+    res.sendFile(path.join(__dirname+"/public/instructions.html"))
 })
 
 router.get('/game-over', (req, res) => { 
-    res.sendFile(path.join(process.cwd()+"gameOver.html"))
+    res.sendFile(path.join(__dirname+"/public/gameOver.html"))
 })
 
 router.get("/winner", (req, res) => { 
-    res.sendFile(path.join(process.cwd() + "playerScore.html"))
+    res.sendFile(path.join(__dirname + "/public/playerScore.html"))
 })
 
 router.get('/high-scores', (req, res) => { 
-    res.sendFile(path.join(process.cwd()+ "scores.html"))
+    res.sendFile(path.join(__dirname+ "/public/scores.html"))
 })
 
 
@@ -51,7 +51,7 @@ router.post('/api/scores', (req,res) => {
     Score.create(req.body)
         // .then(newScore => res.json({score: newScore}))
         .then(() => res.redirect('/high-scores'))
-        .catch(err => res.json({message: "Couldn't create score", error: err}))
+        .catch(err => res.json({message: "Couldn't create score", eror: err}))
 
         // location.replace('/high-scores')
 })
@@ -59,6 +59,6 @@ router.post('/api/scores', (req,res) => {
 
 app.use('/', router);
 require("./config/mogoose.conig")
-app.use(express.static(process.cwd() + '/public'));
+app.use(express.static(__dirname+'/public'));
 app.listen(port, () => console.log('listening on port', port));
 
