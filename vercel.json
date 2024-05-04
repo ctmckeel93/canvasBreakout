@@ -3,6 +3,6 @@
     "builds": [{"src":"./server.js", "use": "@vercel/node"}],
     "routes": [
         {"src": "/", "dest": "/"},
-        {"src":"/public/(*)", "dest": "/public"}
+        {"src":"/public/(.*)", "dest": "/public"}
     ]
 }
