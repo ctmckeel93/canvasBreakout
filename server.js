@@ -11,26 +11,26 @@ app.use(express.urlencoded({extended:true}));
 
 // Views
 router.get('/', (req, res) => { 
-    res.sendFile(path.join(__dirname+'/public/index.html'))
+    res.sendFile(path.join(process.cwd()+'/public/index.html'))
 })
 router.get("/breakout", (req, res) => { 
-    res.sendFile(path.join(__dirname+"/public/game.html"));
+    res.sendFile(path.join(process.cwd()+"/public/game.html"));
 }) 
 
 router.get('/instructions', (req, res) => { 
-    res.sendFile(path.join(__dirname+"/public/instructions.html"))
+    res.sendFile(path.join(process.cwd()+"/public/instructions.html"))
 })
 
 router.get('/game-over', (req, res) => { 
-    res.sendFile(path.join(__dirname+"/public/gameOver.html"))
+    res.sendFile(path.join(process.cwd()+"/public/gameOver.html"))
 })
 
 router.get("/winner", (req, res) => { 
-    res.sendFile(path.join(__dirname + "/public/playerScore.html"))
+    res.sendFile(path.join(process.cwd() + "/public/playerScore.html"))
 })
 
 router.get('/high-scores', (req, res) => { 
-    res.sendFile(path.join(__dirname+ "/public/scores.html"))
+    res.sendFile(path.join(process.cwd()+ "/public/scores.html"))
 })
 
 
