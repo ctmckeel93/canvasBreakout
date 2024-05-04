@@ -11,26 +11,26 @@ app.use(express.urlencoded({extended:true}));
 
 // Views
 router.get('/', (req, res) => { 
-    res.sendFile(path.join(process.cwd()+'/public/index.html'))
+    res.sendFile('/public/index.html')
 })
 router.get("/breakout", (req, res) => { 
-    res.sendFile(path.join(process.cwd()+"/public/game.html"));
+    res.sendFile("game.html");
 }) 
 
 router.get('/instructions', (req, res) => { 
-    res.sendFile(path.join(process.cwd()+"/public/instructions.html"))
+    res.sendFile("instructions.html")
 })
 
 router.get('/game-over', (req, res) => { 
-    res.sendFile(path.join(process.cwd()+"/public/gameOver.html"))
+    res.sendFile("gameOver.html")
 })
 
 router.get("/winner", (req, res) => { 
-    res.sendFile(path.join(process.cwd() + "/public/playerScore.html"))
+    res.sendFile("playerScore.html")
 })
 
 router.get('/high-scores', (req, res) => { 
-    res.sendFile(path.join(process.cwd()+ "/public/scores.html"))
+    res.sendFile("scores.html")
 })
 
 
