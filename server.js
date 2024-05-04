@@ -14,23 +14,23 @@ router.get('/', (req, res) => {
     res.sendFile('index.html', { root: 'public' });
 })
 router.get("/breakout", (req, res) => { 
-    res.sendFile("game.html");
+    res.sendFile('index.html', { root: 'public' });
 }) 
 
 router.get('/instructions', (req, res) => { 
-    res.sendFile("instructions.html")
+    res.sendFile('index.html', { root: 'public' });
 })
 
 router.get('/game-over', (req, res) => { 
-    res.sendFile("gameOver.html")
+    res.sendFile('index.html', { root: 'public' });
 })
 
 router.get("/winner", (req, res) => { 
-    res.sendFile("playerScore.html")
+    res.sendFile('index.html', { root: 'public' });
 })
 
 router.get('/high-scores', (req, res) => { 
-    res.sendFile("scores.html")
+    res.sendFile('index.html', { root: 'public' });
 })
 
 
