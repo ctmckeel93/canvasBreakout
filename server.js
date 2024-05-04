@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended:true}));
 
 // Views
 router.get('/', (req, res) => { 
-    res.sendFile('/public/index.html')
+    res.sendFile('index.html', { root: 'public' });
 })
 router.get("/breakout", (req, res) => { 
     res.sendFile("game.html");
