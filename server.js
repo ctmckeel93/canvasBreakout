@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     res.sendFile('index.html', { root: 'public' });
 })
 router.get("/breakout", (req, res) => { 
-    res.sendFile('index.html', { root: 'public' });
+    res.sendFile('game.html', { root: 'public' });
 }) 
 
 router.get('/instructions', (req, res) => { 
