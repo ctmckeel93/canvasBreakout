@@ -11,6 +11,7 @@ app.use(express.urlencoded({extended:true}));
 
 // Views
 router.get('/', (req, res) => { 
+    console.log("Visiting Home page");
     res.sendFile('index.html', { root: 'public' });
 })
 router.get("/breakout", (req, res) => { 
