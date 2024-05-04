@@ -3,7 +3,6 @@ const path = require('path');
 const app = express();
 const router = express.Router();
 const port = process.env.PORT || 8000;
-
 const Score = require('./models/scores.model');
 
 

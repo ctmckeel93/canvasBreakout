@@ -63,7 +63,7 @@ button {
 
 a {
     text-decoration: none;
-    color: black;
+    color: red;
 }
 
 #selected {
@@ -122,6 +122,12 @@ audio, source {
     flex-wrap: wrap;
     height: 500px;
     width: 90%;
+}
+
+#scores p {
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
 }
 
 .high-scores {

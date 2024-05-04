@@ -11,6 +11,7 @@
     <div class="high-scores" id="container">
         <h1>High Scores</h1>
         <div id="scores"></div>
+        <a href="../">Back</a>
     </div>
 </body>
 
@@ -23,7 +24,7 @@
         .then(() => {
             scores.map((score, idx) => {
                 var scoreShow = document.createElement('p');
-                scoreShow.innerHTML = `${score.name} - ${score.score}`;
+                scoreShow.innerHTML = `${idx + 1}. ${score.name} - ${score.score}`;
     
                 scoreList.appendChild(scoreShow);
             })
