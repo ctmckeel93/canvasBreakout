@@ -59,6 +59,6 @@ router.post('/api/scores', (req,res) => {
 
 app.use('/', router);
 require("./config/mogoose.conig")
-app.use(express.static(__dirname+'/public'));
+app.use(express.static('public'));
 app.listen(port, () => console.log('listening on port', port));
 
