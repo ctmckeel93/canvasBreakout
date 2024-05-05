@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const router = express.Router();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 const Score = require('./models/scores.model');
 
 
@@ -51,9 +51,9 @@ router.post('/api/scores', (req,res) => {
     Score.create(req.body)
         // .then(newScore => res.json({score: newScore}))
         .then(() => res.redirect('/high-scores'))
-        .catch(err => res.json({message: "Couldn't create score", eror: err}))
+        .catch(err => res.json({message: "Couldn't create score", error: err}))
 
-        // location.replace('/high-scores')
+        // res.redirect('/high-scores')
 })
 
 

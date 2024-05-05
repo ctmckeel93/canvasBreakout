@@ -18,8 +18,8 @@
     </audio>
 
 <script>
-    var scores;
-    fetch('http://localhost:8000/api/scores')
+    var scores = [];
+    fetch('http://localhost:3000/api/scores')
         .then(res => res.json())
         .then(data => scores = data.scores)
     // document.requestFullScreen();
@@ -206,14 +206,15 @@
                 if (lives == 0) {
                     // alert("GAME OVER");
                     sessionStorage.setItem("Score", score);
+                    console.log(scores)
                     if (scores.length < 10) {
-                        location.replace('./winner')
+                        window.location.replace('./winner')
                     }
                     else if (scores && scores.some(anyScore => anyScore.score <= score) ) {
-                        location.replace('./winner')
+                        window.location.replace('./winner')
                     }
                     else { 
-                        location.replace('./game-over');
+                        window.location.replace('./game-over');
                     }
                 }
                 else { 
