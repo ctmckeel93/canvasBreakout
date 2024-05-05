@@ -10,28 +10,28 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 // Views
-router.get('/', (req, res) => { 
-    res.sendFile(path.join(__dirname+'/public/index.html'))
-})
-router.get("/breakout", (req, res) => { 
-    res.sendFile(path.join(__dirname,"public","game.html"));
-}) 
+// router.get('/', (req, res) => { 
+//     res.sendFile(path.join(__dirname+'/public/index.html'))
+// })
+// router.get("/breakout", (req, res) => { 
+//     res.sendFile(path.join(__dirname,"public","game.html"));
+// }) 
 
-router.get('/instructions', (req, res) => { 
-    res.sendFile(path.join(__dirname+"/public/instructions.html"))
-})
+// router.get('/instructions', (req, res) => { 
+//     res.sendFile(path.join(__dirname+"/public/instructions.html"))
+// })
 
-router.get('/game-over', (req, res) => { 
-    res.sendFile(path.join(__dirname+"/public/gameOver.html"))
-})
+// router.get('/game-over', (req, res) => { 
+//     res.sendFile(path.join(__dirname+"/public/gameOver.html"))
+// })
 
-router.get("/winner", (req, res) => { 
-    res.sendFile(path.join(__dirname + "/public/playerScore.html"))
-})
+// router.get("/winner", (req, res) => { 
+//     res.sendFile(path.join(__dirname + "/public/playerScore.html"))
+// })
 
-router.get('/high-scores', (req, res) => { 
-    res.sendFile(path.join(__dirname+ "/public/scores.html"))
-})
+// router.get('/high-scores', (req, res) => { 
+//     res.sendFile(path.join(__dirname+ "/public/scores.html"))
+// })
 
 
 // Database queries
@@ -61,4 +61,6 @@ app.use('/', router);
 require("./config/mogoose.conig")
 app.use(express.static(__dirname+'/public'));
 app.listen(port, () => console.log('listening on port', port));
+
+module.exports = app;
 

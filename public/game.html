@@ -208,13 +208,13 @@
                     sessionStorage.setItem("Score", score);
                     console.log(scores)
                     if (scores.length < 10) {
-                        window.location.replace('./winner')
+                        window.location.replace('./playerScore.html')
                     }
                     else if (scores && scores.some(anyScore => anyScore.score <= score) ) {
-                        window.location.replace('./winner')
+                        window.location.replace('./playerScore.html')
                     }
                     else { 
-                        window.location.replace('./game-over');
+                        window.location.replace('./gameOver.html');
                     }
                 }
                 else { 
