@@ -1,7 +1,7 @@
 mongoose = require('mongoose');
 const DB = "scores"
 
-mongoose.connect('mongodb+srv://coreytmckeel:QtsnbLt3GAoAukqq@breakoutdb.kak4hrt.mongodb.net/?retryWrites=true&w=majority&appName=breakoutDB' + DB, { 
+mongoose.connect('mongodb+srv://vercel-admin-user:QU1ZtSfvovnBiVme@breakoutdb.kak4hrt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' + DB, { 
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }). then(() => {
